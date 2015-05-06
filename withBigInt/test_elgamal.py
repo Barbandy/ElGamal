@@ -1,22 +1,15 @@
 #coding: UTF-8
 import random, pytest, elgamal, BigInt
 
-
-def GeneratePrime(bitLen):
-    p = BigInt.GenerateRandomLen(bitLen)
-    while not rsa.MillerRabin(p):
-        p += 1
-    return p
-
-
 def test_elgamal():
-    msg = BigInt.BigInt()
-    p = BigInt.BigInt()
-    p = GeneratePrime(1024)
-   #///...///
+    bitlen = 1024
+    pub_key, priv_key, p, g, y, x = elgamal.KeyGen(bitlen)
+    msg = BigInt.GenerateRandomMax(p-4)
+    msg = BigInt.BigInt(str(msg))
+    a, b = elgamal.encryption(g, msg, p, y)
+    text = elgamal.decryption(a, b, p, x)
     assert msg == text
 
 	
-
 
 

@@ -531,9 +531,24 @@ BigInt BigInt::operator^(const long long int B)const
 {
 	return *this ^ (BigInt) B;
 }
+BigInt BigInt::powmod(BigInt& a, BigInt& k, BigInt& n)
+{
+    BigInt res(1), aa = a, kk = k;
+
+    while (kk != 0)
+    {
+        if ((kk % 2) == 1)
+			res = (res * aa) % n;
+        
+		aa = (aa * aa) % n;
+
+        kk /= 2;
+    }
+
+    return res;
+}
 BigInt GenerateRandomLen(int bitLen)
 {
-    initRandom();
     BigInt res(1);
     size_t res_size ;
     res_size = bitLen / 8;
@@ -550,10 +565,9 @@ BigInt GenerateRandomLen(int bitLen)
     return res;
 }
 
-// генерация случайного большого числа, не превосходящего заданное
+
 BigInt GenerateRandomMax(BigInt max)
 {
-    initRandom();
     BigInt res(1);
     do
     {
